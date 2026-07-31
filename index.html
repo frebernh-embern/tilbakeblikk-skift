@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0f3d3e" />
+<title>Tilbakeblikksfilm – Skiftplan August</title>
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<style>
+  :root{
+    --bg:#0f1417; --card:#171e22; --card2:#1e272c; --line:#2a353b;
+    --text:#eef3f4; --muted:#9fb0b5; --accent:#f0a24b; --accent2:#e5863a;
+    --green:#3ecf8e; --greenbg:#12352a; --red:#ff6b6b; --chip:#243036;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.45;
+    -webkit-font-smoothing:antialiased; padding-bottom:40px;
+  }
+  .wrap{max-width:720px; margin:0 auto}
+  /* Header */
+  header.hero{position:relative; height:210px; overflow:hidden}
+  header.hero img{width:100%; height:100%; object-fit:cover; display:block}
+  header.hero .veil{position:absolute; inset:0; background:linear-gradient(180deg,rgba(15,20,23,.15) 0%,rgba(15,20,23,.55) 60%,rgba(15,20,23,.98) 100%)}
+  header.hero .htext{position:absolute; left:0; right:0; bottom:14px; text-align:center; padding:0 16px}
+  header.hero h1{margin:0; font-size:26px; letter-spacing:.3px; text-shadow:0 2px 10px rgba(0,0,0,.6)}
+  header.hero p{margin:2px 0 0; color:#ffe3c2; font-size:13px; letter-spacing:2px; text-transform:uppercase}
+  /* Bars */
+  .bar{padding:14px 16px; background:var(--card); border-bottom:1px solid var(--line)}
+  .namewrap{display:flex; gap:8px; align-items:center}
+  .namewrap input{
+    flex:1; background:var(--card2); border:1px solid var(--line); color:var(--text);
+    padding:12px 14px; border-radius:12px; font-size:16px; outline:none;
+  }
+  .namewrap input:focus{border-color:var(--accent)}
+  .btn{
+    border:none; border-radius:12px; padding:12px 16px; font-size:15px; font-weight:600;
+    cursor:pointer; background:var(--accent); color:#20140a; white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:var(--chip); color:var(--text); border:1px solid var(--line)}
+  .btn.sm{padding:9px 12px; font-size:14px; border-radius:10px}
+  .who{margin-top:8px; font-size:13px; color:var(--muted)}
+  .who b{color:var(--text)}
+  .toolbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:12px 16px; background:var(--bg)}
+  .toolbar .spacer{flex:1}
+  .toggle{display:flex; align-items:center; gap:8px; font-size:14px; color:var(--muted); cursor:pointer; user-select:none}
+  .toggle input{width:18px; height:18px; accent-color:var(--accent)}
+  .status{font-size:12px; padding:3px 9px; border-radius:20px; background:var(--chip); color:var(--muted)}
+  .status.ok{background:var(--greenbg); color:var(--green)}
+  .status.warn{background:#3a2a12; color:var(--accent)}
+  /* Day + shifts */
+  .day{padding:18px 16px 6px; font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); font-weight:700}
+  .shift{
+    margin:8px 16px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px;
+    transition:border-color .2s;
+  }
+  .shift.mine{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset}
+  .shift .top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+  .shift .time{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .shift h3{margin:2px 0 4px; font-size:17px}
+  .shift .meta{font-size:13px; color:var(--muted)}
+  .shift .need{display:inline-block; margin-top:8px; font-size:12px; padding:3px 10px; border-radius:20px; background:var(--chip); color:var(--text)}
+  .shift .need.drone::after{content:" · 🚁"}
+  .shift .need.full{background:var(--greenbg); color:var(--green)}
+  .people{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+  .pill{font-size:13px; background:var(--card2); border:1px solid var(--line); padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:6px}
+  .pill.me{background:var(--accent); color:#20140a; border-color:var(--accent); font-weight:600}
+  .actions{margin-top:12px; display:flex; gap:8px}
+  .empty{color:var(--muted); font-size:13px; font-style:italic; margin-top:8px}
+  footer{padding:24px 16px; text-align:center; color:var(--muted); font-size:12px}
+  .banner{margin:12px 16px; padding:12px 14px; border-radius:12px; font-size:13px; background:#3a2a12; color:#ffd9a8; border:1px solid #5a3f18}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <img src="header.jpg" alt="Tilbakeblikksfilm" />
+    <div class="veil"></div>
+    <div class="htext">
+      <h1>Tilbakeblikksfilm</h1>
+      <p>Skiftplan · August-stevnet</p>
+    </div>
+  </header>
+
+  <div class="bar">
+    <div class="namewrap">
+      <input id="nameInput" type="text" placeholder="Skriv navnet ditt her…" autocomplete="name" />
+      <button class="btn" id="saveName">Lagre</button>
+    </div>
+    <div class="who" id="whoami"></div>
+  </div>
+
+  <div class="toolbar">
+    <label class="toggle"><input type="checkbox" id="onlyMine" /> Vis kun mine skift</label>
+    <span class="spacer"></span>
+    <button class="btn ghost sm" id="notifyBtn">🔔 Slå på varsler</button>
+  </div>
+  <div id="connStatus" style="padding:0 16px 4px"></div>
+
+  <div id="banner"></div>
+  <div id="list"></div>
+
+  <footer>
+    Varsler: 1 time før + 15 min før hvert skift du er meldt på.<br/>
+    Hold appen åpen/installert for at varslene skal fungere best.
+  </footer>
+</div>
+
+<!-- ===================== FIREBASE ===================== -->
+<!-- Fyll inn din egen firebaseConfig i firebase-config.js (se README). -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+/* ============================================================
+   SKIFTDATA – 2. stevnet (august 2026)
+   ============================================================ */
+const YEAR = 2026;
+// dato = "MM-DD", start/slutt = "HH:MM". need = antall personer. drone = true/false.
+const SHIFTS = [
+  {id:"s01", day:"Lørdag 01.08",  date:"08-01", start:"16:00", end:"18:00", title:"Seniormiddag",                 loc:"Bankettsalen",           need:1, drone:false},
+  {id:"s02", day:"Lørdag 01.08",  date:"08-01", start:"19:00", end:"20:30", title:"Møte",                         loc:"Plenumsalen",            need:1, drone:false},
+  {id:"s03", day:"Søndag 02.08",  date:"08-02", start:"21:30", end:"22:30", title:"Sing Along",                   loc:"Bankettsalen",           need:1, drone:false},
+  {id:"s04", day:"Mandag 03.08",  date:"08-03", start:"12:30", end:"16:30", title:"Fotballturnering",             loc:"Fotballbanen",           need:1, drone:false},
+  {id:"s05", day:"Mandag 03.08",  date:"08-03", start:"19:00", end:"20:00", title:"Magasinet",                    loc:"Plenumsalen",            need:1, drone:false},
+  {id:"s06", day:"Mandag 03.08",  date:"08-03", start:"20:00", end:"23:00", title:"Grendefest",                   loc:"Hotellbyen/Hagebyen",    need:2, drone:false},
+  {id:"s07", day:"Tirsdag 04.08", date:"08-04", start:"14:00", end:"17:30", title:"Brunstad Løp",                 loc:"Brunstad",               need:2, drone:true},
+  {id:"s08", day:"Tirsdag 04.08", date:"08-04", start:"20:00", end:"23:00", title:"Aktiviteter Søstre (13–35 år)",loc:"Bankettsal, KSN",        need:1, drone:false},
+  {id:"s09", day:"Onsdag 05.08",  date:"08-05", start:"09:30", end:"15:30", title:"Tweensdag",                    loc:"Kvitberg gård",          need:1, drone:false},
+  {id:"s10", day:"Onsdag 05.08",  date:"08-05", start:"09:00", end:"11:00", title:"Barnemøte Juniors",            loc:"Plenumsal",              need:1, drone:false},
+  {id:"s11", day:"Onsdag 05.08",  date:"08-05", start:"16:00", end:"17:00", title:"Tweens Fest",                  loc:"Bankettsalen",           need:1, drone:false},
+  {id:"s12", day:"Onsdag 05.08",  date:"08-05", start:"20:00", end:"21:00", title:"Skjærgårdskonsert",            loc:"Strand",                 need:2, drone:true},
+  {id:"s13", day:"Torsdag 06.08", date:"08-06", start:"11:30", end:"12:15", title:"Musikal Visning 1",            loc:"Plenumsalen",            need:1, drone:false},
+  {id:"s14", day:"Torsdag 06.08", date:"08-06", start:"16:00", end:"18:00", title:"Seniormiddag",                 loc:"Bankettsalen",           need:1, drone:false},
+  {id:"s15", day:"Torsdag 06.08", date:"08-06", start:"19:00", end:"20:30", title:"Ungdomsmøte",                  loc:"Plenumsalen",            need:1, drone:false},
+  {id:"s16", day:"Fredag 07.08",  date:"08-07", start:"12:00", end:"12:45", title:"Barnemøte med barnekor",       loc:"Plenumsalen",            need:1, drone:false},
+  {id:"s17", day:"Fredag 07.08",  date:"08-07", start:"16:00", end:"20:00", title:"Sommerfryd",                   loc:"Hele Brunstad",          need:2, drone:true},
+  {id:"s18", day:"Fredag 07.08",  date:"08-07", start:"19:30", end:"21:00", title:"Fotballturnering Finalekamper",loc:"Fotballbanen",           need:1, drone:false},
+];
+
+/* ============================================================
+   STATE + STORAGE
+   Firestore hvis konfigurert, ellers localStorage (kun din enhet).
+   ============================================================ */
+let db = null, useFirebase = false;
+let signups = {};        // { shiftId: [name, name, ...] }
+let myName = localStorage.getItem("tb_name") || "";
+let onlyMine = false;
+const scheduled = {};    // for å unngå doble varsler
+
+try {
+  if (window.firebaseConfig && window.firebaseConfig.projectId) {
+    firebase.initializeApp(window.firebaseConfig);
+    db = firebase.firestore();
+    useFirebase = true;
+  }
+} catch (e) { console.warn("Firebase-init feilet:", e); }
+
+/* ---------- Firestore realtime ---------- */
+function subscribe() {
+  if (!useFirebase) { signups = JSON.parse(localStorage.getItem("tb_signups")||"{}"); render(); return; }
+  db.collection("signups").onSnapshot(snap=>{
+    signups = {};
+    snap.forEach(doc=>{ signups[doc.id] = (doc.data().people)||[]; });
+    render();
+  }, err=>{
+    console.error(err);
+    setConn("Kunne ikke koble til databasen – sjekk oppsettet.", "warn");
+  });
+}
+
+async function toggleSignup(shiftId) {
+  if (!myName) { alert("Skriv inn navnet ditt først."); document.getElementById("nameInput").focus(); return; }
+  const list = signups[shiftId] || [];
+  const isOn = list.includes(myName);
+  if (useFirebase) {
+    const ref = db.collection("signups").doc(shiftId);
+    await ref.set({ people: isOn
+        ? firebase.firestore.FieldValue.arrayRemove(myName)
+        : firebase.firestore.FieldValue.arrayUnion(myName) }, {merge:true});
+  } else {
+    signups[shiftId] = isOn ? list.filter(n=>n!==myName) : [...list, myName];
+    localStorage.setItem("tb_signups", JSON.stringify(signups));
+    render();
+  }
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function setConn(txt, cls){
+  const el=document.getElementById("connStatus");
+  el.innerHTML = txt ? `<span class="status ${cls||''}">${txt}</span>` : "";
+}
+function render(){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  let lastDay = null;
+  const mine = new Set();
+  SHIFTS.forEach(s=>{ if((signups[s.id]||[]).includes(myName)) mine.add(s.id); });
+
+  SHIFTS.forEach(s=>{
+    const people = signups[s.id] || [];
+    const iAmOn = people.includes(myName);
+    if (onlyMine && !iAmOn) return;
+
+    if (s.day !== lastDay){
+      const d=document.createElement("div"); d.className="day"; d.textContent=s.day;
+      list.appendChild(d); lastDay=s.day;
+    }
+    const filled = people.length >= s.need;
+    const card=document.createElement("div");
+    card.className="shift"+(iAmOn?" mine":"");
+    card.innerHTML = `
+      <div class="top">
+        <div>
+          <div class="time">${s.start}–${s.end}</div>
+          <h3>${s.title}</h3>
+          <div class="meta">📍 ${s.loc}</div>
+        </div>
+        <button class="btn sm ${iAmOn?'ghost':''}" data-id="${s.id}">
+          ${iAmOn?"Meld av":"Meld på"}
+        </button>
+      </div>
+      <span class="need ${s.drone?'drone':''} ${filled?'full':''}">
+        ${people.length}/${s.need} meldt på${s.need>1?" · behov "+s.need+" pers":""}
+      </span>
+      ${people.length ? `<div class="people">${
+          people.map(n=>`<span class="pill ${n===myName?'me':''}">${escapeHtml(n)}</span>`).join("")
+        }</div>` : `<div class="empty">Ingen påmeldt ennå</div>`}
+    `;
+    card.querySelector("button").addEventListener("click",()=>toggleSignup(s.id));
+    list.appendChild(card);
+  });
+
+  if (onlyMine && mine.size===0){
+    list.innerHTML = `<div class="empty" style="margin:24px 16px">Du er ikke meldt på noen skift ennå.</div>`;
+  }
+  updateWho();
+  scheduleNotifications();
+}
+function updateWho(){
+  const el=document.getElementById("whoami");
+  const count = SHIFTS.filter(s=>(signups[s.id]||[]).includes(myName)).length;
+  el.innerHTML = myName
+    ? `Innlogget som <b>${escapeHtml(myName)}</b> · ${count} skift`
+    : `Skriv inn navnet ditt for å melde deg på skift.`;
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ============================================================
+   VARSLER (lokale) – 1 time før + 15 min før
+   ============================================================ */
+function shiftStartDate(s){
+  const [mm,dd]=s.date.split("-").map(Number);
+  const [h,mi]=s.start.split(":").map(Number);
+  return new Date(YEAR, mm-1, dd, h, mi, 0);
+}
+async function enableNotifications(){
+  if (!("Notification" in window)) { alert("Enheten støtter ikke varsler."); return; }
+  const p = await Notification.requestPermission();
+  if (p==="granted"){ localStorage.setItem("tb_notif","1"); scheduleNotifications(); flashNotifBtn(true);
+    new Notification("Varsler er på ✅",{body:"Du får beskjed 1 time og 15 min før hvert skift.",icon:"icon-192.png"});
+  } else { alert("Varsler ble ikke tillatt. Du kan slå det på i nettleser-innstillingene."); }
+}
+function flashNotifBtn(on){
+  const b=document.getElementById("notifyBtn");
+  b.textContent = on ? "🔔 Varsler på" : "🔔 Slå på varsler";
+}
+function scheduleNotifications(){
+  if (!("Notification" in window) || Notification.permission!=="granted" || !myName) return;
+  const now=Date.now();
+  SHIFTS.forEach(s=>{
+    if(!(signups[s.id]||[]).includes(myName)) return;
+    const start=shiftStartDate(s).getTime();
+    [[60,"om 1 time"],[15,"om 15 minutter"]].forEach(([min,label])=>{
+      const fireAt = start - min*60*1000;
+      const key = s.id+"_"+min;
+      if (fireAt>now && !scheduled[key]){
+        const delay = fireAt-now;
+        if (delay < 2**31){ // setTimeout maks ~24,8 dager
+          scheduled[key]=setTimeout(()=>{
+            new Notification("Skift "+label,{
+              body:`${s.title} kl. ${s.start} · ${s.loc}`, icon:"icon-192.png", tag:key
+            });
+          }, delay);
+        }
+      }
+    });
+  });
+}
+
+/* ============================================================
+   EVENTS + INIT
+   ============================================================ */
+document.getElementById("saveName").addEventListener("click",()=>{
+  const v=document.getElementById("nameInput").value.trim();
+  if(!v){ alert("Skriv inn et navn."); return; }
+  myName=v; localStorage.setItem("tb_name",v); updateWho(); render();
+});
+document.getElementById("nameInput").addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("saveName").click(); });
+document.getElementById("onlyMine").addEventListener("change",e=>{ onlyMine=e.target.checked; render(); });
+document.getElementById("notifyBtn").addEventListener("click",enableNotifications);
+
+if (myName) document.getElementById("nameInput").value = myName;
+if (window.Notification && Notification.permission==="granted") flashNotifBtn(true);
+
+// Banner ved manglende Firebase
+if (!useFirebase){
+  document.getElementById("banner").innerHTML =
+    `<div class="banner">⚠️ Databasen er ikke koblet til ennå – påmeldinger lagres <b>kun på din enhet</b>.
+     Følg README for å koble til Firebase, så deles listen mellom alle.</div>`;
+  setConn("Lokal modus", "warn");
+} else {
+  setConn("Tilkoblet · påmeldinger deles i sanntid", "ok");
+}
+
+// Service worker (PWA)
+if ("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
+
+subscribe();
+</script>
+</body>
+</html>
